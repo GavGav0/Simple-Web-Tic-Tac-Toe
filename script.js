@@ -7,6 +7,17 @@ let totalCells = gridSize * gridSize;
 let gameState = Array(totalCells).fill('');
 let winConditions = generateWinConditions();
 
+// Load visitor count from localStorage
+let visitorCount = localStorage.getItem('visitorCount');
+if (visitorCount === null) {
+  visitorCount = 0;
+} else {
+  visitorCount = parseInt(visitorCount);
+}
+
+// Display visitor count on page load
+document.getElementById('visitorCount').textContent = visitorCount;
+
 function generateWinConditions() {
   let conditions = [];
 
@@ -126,6 +137,7 @@ function restartGame() {
   hideEndScreen();
   resetGame();
 }
+
 function toggleFullScreen() {
   if (!document.fullscreenElement) {
     document.documentElement.requestFullscreen().catch(err => {
@@ -137,3 +149,16 @@ function toggleFullScreen() {
     }
   }
 }
+
+// Function to increase visitor count
+function increaseVisitorCount() {
+  // Increment visitor count
+  visitorCount++;
+  // Update visitor count in localStorage
+  localStorage.setItem('visitorCount', visitorCount);
+  // Display updated visitor count on the page
+  document.getElementById('visitorCount').textContent = visitorCount;
+}
+
+// Call increaseVisitorCount function when the page loads
+window.onload = increaseVisitorCount;
